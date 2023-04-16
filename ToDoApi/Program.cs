@@ -10,15 +10,15 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
                builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
            }));
 var app = builder.Build();
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+// }
 app.UseCors("corsapp");
 app.UseHttpsRedirection();
 app.MapGet("/items", async (ToDoDbContext context) => { return await context.Items.ToListAsync(); });
-
+app.MapGet("/",()=>"ToDoList server is running");
 app.MapPost("/items", async (ToDoDbContext context, Item item) =>
 {
     EntityEntry<Item> itemToReturn = context.Items.Add(item); await context.SaveChangesAsync();
