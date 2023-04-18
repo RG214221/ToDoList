@@ -17,7 +17,7 @@ var app = builder.Build();
 // }
 app.UseCors("corsapp");
 app.UseHttpsRedirection();
-app.MapGet("/items", async (ToDoDbContext context) => { return await context.Items.ToListAsync(); });
+app.MapGet("/items", async (ToDoDbContext context) => { return await [{"Id":"1","Name":"something","IsComplete":"1"}] });
 app.MapGet("/",()=>"ToDoList server is running");
 app.MapPost("/items", async (ToDoDbContext context, Item item) =>
 {
