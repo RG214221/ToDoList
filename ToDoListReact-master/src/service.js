@@ -1,5 +1,5 @@
 import axios from 'axios';
-axios.defaults.baseURL = process.env.REACT_APP_BaseUrl;
+axios.defaults.baseURL = process.env.REACT_APP_BaseUrl+"/items";
 axios.interceptors.response.use(
   function (response) {
     return response;
@@ -13,7 +13,7 @@ axios.interceptors.response.use(
 
 export default {
   getTasks: async () => {
-    const result = await axios.get('')
+    const result = await axios.get()
     return result.data;
   },
 
