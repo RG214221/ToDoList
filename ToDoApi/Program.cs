@@ -17,7 +17,7 @@ var app = builder.Build();
 // }
 app.UseCors("corsapp");
 app.UseHttpsRedirection();
-app.MapGet("/items", async (ToDoDbContext context) => { return [
+app.MapGet("/items", () => { return [
   {
     "id": 19,
     "name": "eh",
