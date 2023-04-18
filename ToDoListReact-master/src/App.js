@@ -6,8 +6,8 @@ function App() {
   const [todos, setTodos] = useState([]);
 
   async function getTodos() {
-    const todos = await service.getTasks();
-    setTodos(todos);
+//     const todos = await service.getTasks();
+//     setTodos(todos);
   }
 
   async function createTodo(e) {
