@@ -17,20 +17,19 @@ var app = builder.Build();
 // }
 app.UseCors("corsapp");
 app.UseHttpsRedirection();
-app.MapGet("/items", async (ToDoDbContext context) => { return await context.Items.ToListAsync();} );
-// app.MapGet("/",()=>"ToDoList server is running");
-app.MapPost("/items", async (ToDoDbContext context, Item item) =>
+app.MapGet("/", async (ToDoDbContext context) => { return await context.Items.ToListAsync();} );
+app.MapPost("/", async (ToDoDbContext context, Item item) =>
 {
     EntityEntry<Item> itemToReturn = context.Items.Add(item); await context.SaveChangesAsync();
     return itemToReturn.Entity;
 });
-app.MapPut("/items", async (ToDoDbContext context, Item item) =>
+app.MapPut("/", async (ToDoDbContext context, Item item) =>
 {
     var entity = context.Items.Update(item);
     await context.SaveChangesAsync();
     return entity.Entity;
 });
-app.MapDelete("/items", async (ToDoDbContext context, int id) =>
+app.MapDelete("/", async (ToDoDbContext context, int id) =>
 {
     context.Items.Remove(context.Items.FirstOrDefault(item => item.Id == id));
     await context.SaveChangesAsync();
