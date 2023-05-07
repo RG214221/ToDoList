@@ -1,26 +1,22 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 5285
+EXPOSE 80
+EXPOSE 443
 
-ENV ASPNETCORE_URLS=http://+:5285
+ENV ASPNETCORE_URLS=http://+:80
 
-# Creates a non-root user with an explicit UID and adds permission to access the /app folder
-# For more info, please refer to https://aka.ms/vscode-docker-dotnet-configure-containers
-RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
-USER appuser
-
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["ToDoApi.csproj", "./"]
-RUN dotnet restore "ToDoApi.csproj"
+COPY ["TodoApi.csproj", "./"]
+RUN dotnet restore "TodoApi.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "ToDoApi.csproj" -c Release -o /app/build
+RUN dotnet build "TodoApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "ToDoApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "TodoApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ToDoApi.dll"]
+ENTRYPOINT ["dotnet", "TodoApi.dll"]
